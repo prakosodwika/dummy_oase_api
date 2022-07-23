@@ -30,7 +30,7 @@ decryptPassword = (plainPassword, hashPassword) => {
 
 // membuat token
 createToken = (payload) => {
-  return jwt.sign(payload.toJSON, secretKey);
+  return jwt.sign(payload.toJSON(), secretKey);
 };
 // membuka token
 parseToken = (token) => {
@@ -120,10 +120,10 @@ router.post("/login", async (req, res) => {
     });
     if (mahasiswa) {
       if (decryptPassword(password, mahasiswa.password)) {
-        // const accessToken = createToken(mahasiswa);
+        const accessToken = createToken(mahasiswa);
         return res.status(200).json({
           status: 200,
-          //   token: accessToken,
+          token: accessToken,
           data: mahasiswa,
         });
       }
